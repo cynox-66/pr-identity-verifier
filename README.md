@@ -215,7 +215,4 @@ This PoC uses mock/simulated DID and VC logic. The architecture is designed for 
 | Scoring | Fixed 4-check weights | Configurable per-org with reputation signals |
 
 ---
-
-## 📜 License
-
-MIT
+teste number 2
