@@ -46,13 +46,13 @@ import { logger } from '../utils/logger';
 export function resolveDID(username: string, providedDid?: string): string {
   // ── Contributor-provided DID path ────────────────────────────────────
   if (providedDid) {
-    logger.info('Using contributor-provided DID', { username, did: providedDid });
+    logger.debug('Using contributor-provided DID', { username, did: providedDid });
     return providedDid;
   }
 
   // ── Fallback: generate a mock DID from the username ──────────────────
   const did = `did:web:${config.DID_DOMAIN}/users/${username}`;
-  logger.info('Using fallback mock DID for contributor', { username, did });
+  logger.debug('Using fallback mock DID', { username, did });
   return did;
 }
 
@@ -101,6 +101,6 @@ export function getDIDDocument(did: string): DIDDocument {
     ],
   };
 
-  logger.info('DID Document retrieved', { did, keys: doc.publicKey.length });
+  logger.debug('DID Document retrieved', { did, keys: doc.publicKey.length });
   return doc;
 }

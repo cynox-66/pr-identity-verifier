@@ -44,11 +44,7 @@ export function issueCredential(subjectDID: string): VerifiableCredential {
     valid: true, // Always valid in the mock — real logic checks expiry + revocation
   };
 
-  logger.info('Credential issued', {
-    issuer: credential.issuer,
-    subject: credential.subject,
-    type: credential.type,
-  });
+  logger.debug('Credential issued', { subject: credential.subject });
 
   return credential;
 }
@@ -63,10 +59,7 @@ export function issueCredential(subjectDID: string): VerifiableCredential {
 export function validateCredential(credential: VerifiableCredential): boolean {
   const isValid = credential.valid;
 
-  logger.info('Credential validation result', {
-    subject: credential.subject,
-    valid: isValid,
-  });
+  logger.debug('Credential validated', { valid: isValid });
 
   return isValid;
 }
@@ -80,10 +73,7 @@ export function validateCredential(credential: VerifiableCredential): boolean {
 export function isIssuerTrusted(issuerDID: string): boolean {
   const trusted = config.TRUSTED_ISSUERS.includes(issuerDID);
 
-  logger.info('Issuer trust check', {
-    issuer: issuerDID,
-    trusted,
-  });
+  logger.debug('Issuer trust check', { trusted });
 
   return trusted;
 }

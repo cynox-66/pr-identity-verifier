@@ -43,10 +43,7 @@ const SCORE_WEIGHTS = {
  * Run the full verification pipeline for a single contributor.
  */
 export async function verifyContributor(contributor: Contributor): Promise<VerificationResult> {
-  logger.info('━━━ Verification pipeline started ━━━', {
-    username: contributor.username,
-    githubId: contributor.githubId,
-  });
+  logger.info('⚙️  VERIFICATION STARTED', { contributor: contributor.username });
 
   try {
     // ── Step 1: Resolve DID ──────────────────────────────────────────────
@@ -57,20 +54,8 @@ export async function verifyContributor(contributor: Contributor): Promise<Verif
     const did = resolveDID(contributor.username, contributor.did);
     const didResolved = Boolean(did);
 
-    logger.info('DID resolution complete', {
-      username: contributor.username,
-      didProvided,
-      did,
-      source: didProvided ? 'contributor' : 'fallback-mock',
-    });
-
     // ── Step 2: Fetch DID Document ───────────────────────────────────────
     const didDocument = getDIDDocument(did);
-    logger.info('DID Document fetched', {
-      id: didDocument.id,
-      verificationMethods: didDocument.verificationMethod.length,
-      services: didDocument.service.length,
-    });
 
     // ── Step 3: Issue / fetch mock credential ────────────────────────────
     const credential = issueCredential(did);
@@ -109,12 +94,10 @@ export async function verifyContributor(contributor: Contributor): Promise<Verif
       timestamp: new Date().toISOString(),
     };
 
-    logger.info('━━━ Verification pipeline completed ━━━', {
-      username: contributor.username,
+    logger.info(`${result.verified ? '✅' : '❌'} VERIFICATION COMPLETE`, {
+      score: `${result.score}/100`,
       verified: result.verified,
-      score: result.score,
-      didProvided,
-      checks: result.checks,
+      did,
     });
 
     return result;

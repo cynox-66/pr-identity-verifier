@@ -81,6 +81,5 @@ export function extractDIDFromText(text: string | null | undefined): string | nu
     return null;
   }
 
-  logger.info('DID extracted from text', { did });
   return did;
 }

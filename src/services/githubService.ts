@@ -15,7 +15,94 @@
 
 import { Octokit } from '@octokit/rest';
 import { VerificationResult } from '../types/contributor';
+import { config } from '../config';
 import { logger } from '../utils/logger';
+
+// ── Comment body formatter ────────────────────────────────────────────────
+
+/** Hidden HTML marker for idempotent comment detection */
+const COMMENT_MARKER = '<!-- did-verification-result -->';
+
+/** Score weight constants (must match verifier.ts) */
+const WEIGHTS = { didResolved: 30, credentialValid: 30, issuerTrusted: 20, didProvided: 20 } as const;
+
+/**
+ * Build the full Markdown body for the PR verification comment.
+ *
+ * This function is pure — it takes verification data in and returns
+ * a formatted string out. All dynamic sections (status, breakdown,
+ * explanation) are driven by the actual result values.
+ */
+function formatVerificationComment(username: string, result: VerificationResult): string {
+  // ── Dynamic status tier ──────────────────────────────────────────────
+  let statusIcon: string;
+  let statusLabel: string;
+
+  if (result.score === 100) {
+    statusIcon = '🟢';
+    statusLabel = 'VERIFIED';
+  } else if (result.score >= config.MIN_VERIFICATION_SCORE) {
+    statusIcon = '🟡';
+    statusLabel = 'PARTIALLY VERIFIED';
+  } else {
+    statusIcon = '🔴';
+    statusLabel = 'NOT VERIFIED';
+  }
+
+  // ── Dynamic explanation ──────────────────────────────────────────────
+  let explanation: string;
+
+  if (result.score === 100) {
+    explanation = 'This contributor has successfully passed all identity verification checks. '
+      + 'The provided DID was resolved, the credential is valid, and the issuer is trusted.';
+  } else if (result.score >= config.MIN_VERIFICATION_SCORE) {
+    explanation = 'This contributor provided a DID but some verification checks failed or were incomplete. '
+      + 'Review the breakdown above to understand which checks did not pass.';
+  } else {
+    explanation = 'This contributor did not pass verification. '
+      + 'The DID may be missing, invalid, or the credential issuer is not trusted.';
+  }
+
+  // ── Score helpers ────────────────────────────────────────────────────
+  const pts = (pass: boolean, weight: number) => pass ? `+${weight}` : '+0';
+  const icon = (pass: boolean) => pass ? '✅' : '❌';
+
+  // ── Assemble markdown ───────────────────────────────────────────────
+  return [
+    COMMENT_MARKER,
+    '',
+    `## 🔐 DID Verification Report`,
+    '',
+    `**Contributor:** @${username}`,
+    `**DID:** \`${result.did}\``,
+    '',
+    '---',
+    '',
+    `### ${statusIcon} Status: ${statusLabel}`,
+    `### 🧠 Trust Score: **${result.score} / 100**`,
+    '',
+    '---',
+    '',
+    '### 📊 Breakdown',
+    '',
+    '| Check | Result | Score |',
+    '|---|---|---|',
+    `| DID Resolved | ${icon(result.checks.didResolved)} | ${pts(result.checks.didResolved, WEIGHTS.didResolved)} |`,
+    `| Credential Valid | ${icon(result.checks.credentialValid)} | ${pts(result.checks.credentialValid, WEIGHTS.credentialValid)} |`,
+    `| Issuer Trusted | ${icon(result.checks.issuerTrusted)} | ${pts(result.checks.issuerTrusted, WEIGHTS.issuerTrusted)} |`,
+    `| DID Provided | ${icon(result.checks.didProvided)} | ${pts(result.checks.didProvided, WEIGHTS.didProvided)} |`,
+    '',
+    '---',
+    '',
+    '### 💡 What this means',
+    '',
+    explanation,
+    '',
+    '---',
+    '',
+    `<sub>Generated automatically by DID Identity Verifier · ${result.timestamp}</sub>`,
+  ].join('\n');
+}
 
 class GitHubService {
   private client: Octokit;
@@ -113,8 +200,6 @@ class GitHubService {
 
   // ── PR Comments (idempotent — updates existing comment if found) ─────────
 
-  /** Marker used to identify our bot comments so we can update instead of spam */
-  private static readonly COMMENT_MARKER = '<!-- did-verification-result -->';
 
   /**
    * Post or update a PR comment with verification results.
@@ -131,35 +216,7 @@ class GitHubService {
     result: VerificationResult
   ): Promise<void> {
     try {
-      const statusIcon = result.verified ? '✅' : '❌';
-
-      const body = [
-        GitHubService.COMMENT_MARKER,
-        `## 🔐 Contributor Identity Verification`,
-        '',
-        `**User:** @${username}`,
-        `**DID:** \`${result.did}\``,
-        `**Status:** ${statusIcon} ${result.verified ? 'VERIFIED' : 'VERIFICATION FAILED'}`,
-        `**Score:** ${result.score}/100`,
-        '',
-        '### DID Source',
-        `- Provided by Contributor: ${result.checks.didProvided ? '**Yes** ✅' : 'No (fallback mock DID)'}`,
-        '',
-        '### Checks',
-        `| Check | Result | Points |`,
-        `|-------|--------|--------|`,
-        `| DID Resolved | ${result.checks.didResolved ? '✅ Pass' : '❌ Fail'} | ${result.checks.didResolved ? '30' : '0'}/30 |`,
-        `| Credential Valid | ${result.checks.credentialValid ? '✅ Pass' : '❌ Fail'} | ${result.checks.credentialValid ? '30' : '0'}/30 |`,
-        `| Issuer Trusted | ${result.checks.issuerTrusted ? '✅ Pass' : '❌ Fail'} | ${result.checks.issuerTrusted ? '20' : '0'}/20 |`,
-        `| DID Provided | ${result.checks.didProvided ? '✅ Pass' : '❌ Fail'} | ${result.checks.didProvided ? '20' : '0'}/20 |`,
-        '',
-        '### Result',
-        `${statusIcon} **${result.verified ? 'Verification Passed' : 'Verification Failed'}** — Score: **${result.score}/100**`,
-        '',
-        '---',
-        `*Verification Method:* \`${result.verificationMethod}\``,
-        `*Timestamp:* ${result.timestamp}`,
-      ].join('\n');
+      const body = formatVerificationComment(username, result);
 
       // ── Find existing bot comment ──────────────────────────────────────
       const existingCommentId = await this.findExistingComment(owner, repo, prNumber);
@@ -172,9 +229,7 @@ class GitHubService {
           comment_id: existingCommentId,
           body,
         });
-        logger.info('Updated existing verification comment', {
-          owner, repo, prNumber, commentId: existingCommentId,
-        });
+        logger.info('💬 PR COMMENT UPDATED', { prNumber, commentId: existingCommentId });
       } else {
         // First time — create new comment
         await this.client.issues.createComment({
@@ -183,9 +238,7 @@ class GitHubService {
           issue_number: prNumber,
           body,
         });
-        logger.info('Posted new verification comment', {
-          owner, repo, prNumber, username,
-        });
+        logger.info('💬 PR COMMENT POSTED', { prNumber });
       }
     } catch (error) {
       logger.error('Failed to post verification comment', {
@@ -216,7 +269,7 @@ class GitHubService {
       });
 
       const existing = comments.find(
-        (c) => c.body?.includes(GitHubService.COMMENT_MARKER)
+        (c) => c.body?.includes(COMMENT_MARKER)
       );
 
       return existing ? existing.id : null;

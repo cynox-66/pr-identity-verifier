@@ -37,15 +37,9 @@ function extractContributor(payload: any): Contributor {
   const providedDid = extractDIDFromText(pr.body) ?? extractDIDFromText(pr.title);
 
   if (providedDid) {
-    logger.info('Contributor provided a DID in PR metadata', {
-      username: user.login,
-      did: providedDid,
-      source: extractDIDFromText(pr.body) ? 'pr_body' : 'pr_title',
-    });
+    logger.info('🪪 DID EXTRACTED', { did: providedDid, source: extractDIDFromText(pr.body) ? 'pr_body' : 'pr_title' });
   } else {
-    logger.info('No contributor-provided DID found — will use fallback mock DID', {
-      username: user.login,
-    });
+    logger.info('🪪 DID: none provided — using fallback');
   }
 
   return {
@@ -94,12 +88,7 @@ export async function handlePullRequestOpened(
   try {
     const context = extractPRContext(event.payload);
 
-    logger.info('PR event received — starting verification workflow', {
-      repo: `${context.repoOwner}/${context.repoName}`,
-      prNumber: context.prNumber,
-      contributor: context.contributor.username,
-      headSha: context.headSha,
-    });
+    // Stage header already logged in handler.ts
 
     // ── Run the verification pipeline ─────────────────────────────────
     const result = await verifyContributor(context.contributor);
@@ -129,13 +118,7 @@ export async function handlePullRequestOpened(
       );
     }
 
-    logger.info('Verification workflow completed', {
-      repo: `${context.repoOwner}/${context.repoName}`,
-      prNumber: context.prNumber,
-      verified: result.verified,
-      score: result.score,
-      did: result.did,
-    });
+    logger.info('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   } catch (error) {
     logger.error('Error handling PR event', {
       error: error instanceof Error ? error.message : String(error),
