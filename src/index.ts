@@ -1,11 +1,5 @@
 /**
  * GitHub Identity Verifier — Server Bootstrap
- *
- * Entry point for the GitHub App webhook server.
- * Initializes Express, webhook handlers, and environment configuration.
- *
- * Run with:   npm run dev
- * Expose with: ngrok http 3000
  */
 
 import 'dotenv/config';
@@ -53,10 +47,16 @@ async function main(): Promise<void> {
 
     const app = express();
 
-    // Parse JSON bodies
+    // 🔥 1. WEBHOOK FIRST (raw body required)
+    app.use(
+      '/webhooks/github',
+      createWebhookHandler(webhookSecret, githubToken)
+    );
+
+    // 🔥 2. THEN JSON PARSER (for everything else)
     app.use(express.json());
 
-    // Health check — useful for uptime monitors and load balancers
+    // Health check
     app.get('/health', (_req: Request, res: Response) => {
       res.json({
         status: 'ok',
@@ -69,15 +69,12 @@ async function main(): Promise<void> {
       });
     });
 
-    // Webhook endpoint — GitHub sends events here
-    app.use('/webhooks/github', createWebhookHandler(webhookSecret, githubToken));
-
     // 404
     app.use((_req: Request, res: Response) => {
       res.status(404).json({ error: 'Not found' });
     });
 
-    // Global error handler
+    // Error handler
     app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
       logger.error('Express error', {
         message: err.message,
@@ -87,7 +84,6 @@ async function main(): Promise<void> {
       res.status(500).json({ error: 'Internal server error' });
     });
 
-    // Start
     app.listen(port, () => {
       logger.info('Server listening', {
         url: `http://localhost:${port}`,

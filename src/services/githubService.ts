@@ -111,11 +111,17 @@ class GitHubService {
     }
   }
 
-  // ── PR Comments (legacy / optional) ─────────────────────────────────────
+  // ── PR Comments (idempotent — updates existing comment if found) ─────────
+
+  /** Marker used to identify our bot comments so we can update instead of spam */
+  private static readonly COMMENT_MARKER = '<!-- did-verification-result -->';
 
   /**
-   * Post a PR comment with verification results.
-   * Kept as an optional fallback — Check Runs are preferred.
+   * Post or update a PR comment with verification results.
+   *
+   * Idempotent: searches for an existing comment with our marker and updates
+   * it in place. Only creates a new comment if none exists. This prevents
+   * duplicate comments when a PR is edited multiple times.
    */
   async postVerificationComment(
     owner: string,
@@ -128,43 +134,59 @@ class GitHubService {
       const statusIcon = result.verified ? '✅' : '❌';
 
       const body = [
-        `## Contributor Identity Verification`,
+        GitHubService.COMMENT_MARKER,
+        `## 🔐 Contributor Identity Verification`,
         '',
         `**User:** @${username}`,
         `**DID:** \`${result.did}\``,
+        `**Status:** ${statusIcon} ${result.verified ? 'VERIFIED' : 'VERIFICATION FAILED'}`,
+        `**Score:** ${result.score}/100`,
         '',
         '### DID Source',
-        `- Provided by Contributor: ${result.checks.didProvided ? 'Yes' : 'No'}`,
+        `- Provided by Contributor: ${result.checks.didProvided ? '**Yes** ✅' : 'No (fallback mock DID)'}`,
         '',
         '### Checks',
-        `- DID Resolved: ${result.checks.didResolved ? '✅' : '❌'}`,
-        `- Credential Valid: ${result.checks.credentialValid ? '✅' : '❌'}`,
-        `- Trusted Issuer: ${result.checks.issuerTrusted ? '✅' : '❌'}`,
-        `- DID Provided: ${result.checks.didProvided ? '✅' : '❌'}`,
+        `| Check | Result | Points |`,
+        `|-------|--------|--------|`,
+        `| DID Resolved | ${result.checks.didResolved ? '✅ Pass' : '❌ Fail'} | ${result.checks.didResolved ? '30' : '0'}/30 |`,
+        `| Credential Valid | ${result.checks.credentialValid ? '✅ Pass' : '❌ Fail'} | ${result.checks.credentialValid ? '30' : '0'}/30 |`,
+        `| Issuer Trusted | ${result.checks.issuerTrusted ? '✅ Pass' : '❌ Fail'} | ${result.checks.issuerTrusted ? '20' : '0'}/20 |`,
+        `| DID Provided | ${result.checks.didProvided ? '✅ Pass' : '❌ Fail'} | ${result.checks.didProvided ? '20' : '0'}/20 |`,
         '',
         '### Result',
-        `${statusIcon} **${result.verified ? 'Verification Passed' : 'Verification Failed'}**`,
-        '',
-        `### Score: ${result.score}/100`,
+        `${statusIcon} **${result.verified ? 'Verification Passed' : 'Verification Failed'}** — Score: **${result.score}/100**`,
         '',
         '---',
         `*Verification Method:* \`${result.verificationMethod}\``,
         `*Timestamp:* ${result.timestamp}`,
       ].join('\n');
 
-      await this.client.issues.createComment({
-        owner,
-        repo,
-        issue_number: prNumber,
-        body,
-      });
+      // ── Find existing bot comment ──────────────────────────────────────
+      const existingCommentId = await this.findExistingComment(owner, repo, prNumber);
 
-      logger.info('Posted verification comment', {
-        owner,
-        repo,
-        prNumber,
-        username,
-      });
+      if (existingCommentId) {
+        // Update in place — no duplicate spam
+        await this.client.issues.updateComment({
+          owner,
+          repo,
+          comment_id: existingCommentId,
+          body,
+        });
+        logger.info('Updated existing verification comment', {
+          owner, repo, prNumber, commentId: existingCommentId,
+        });
+      } else {
+        // First time — create new comment
+        await this.client.issues.createComment({
+          owner,
+          repo,
+          issue_number: prNumber,
+          body,
+        });
+        logger.info('Posted new verification comment', {
+          owner, repo, prNumber, username,
+        });
+      }
     } catch (error) {
       logger.error('Failed to post verification comment', {
         owner,
@@ -173,6 +195,36 @@ class GitHubService {
         error: error instanceof Error ? error.message : String(error),
       });
       throw error;
+    }
+  }
+
+  /**
+   * Search for an existing verification comment on this PR.
+   * Returns the comment ID if found, null otherwise.
+   */
+  private async findExistingComment(
+    owner: string,
+    repo: string,
+    prNumber: number
+  ): Promise<number | null> {
+    try {
+      const { data: comments } = await this.client.issues.listComments({
+        owner,
+        repo,
+        issue_number: prNumber,
+        per_page: 100,
+      });
+
+      const existing = comments.find(
+        (c) => c.body?.includes(GitHubService.COMMENT_MARKER)
+      );
+
+      return existing ? existing.id : null;
+    } catch (error) {
+      logger.warn('Could not search for existing comments — will create new', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+      return null;
     }
   }
 
