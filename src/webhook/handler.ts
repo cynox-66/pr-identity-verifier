@@ -52,5 +52,8 @@ export function createWebhookHandler(
     });
   });
 
-  return createNodeMiddleware(webhooks);
+  // path: '/' ensures the middleware matches at the Express mount point directly.
+  // Without this, createNodeMiddleware defaults to '/api/github/webhooks', making
+  // the actual URL '/webhooks/github/api/github/webhooks' instead of '/webhooks/github'.
+  return createNodeMiddleware(webhooks, { path: '/' });
 }
