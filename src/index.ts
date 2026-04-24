@@ -41,7 +41,7 @@ async function main(): Promise<void> {
       nodeEnv: process.env.NODE_ENV || 'development',
       checkRuns: config.ENABLE_CHECK_RUNS,
       prComments: config.ENABLE_PR_COMMENTS,
-      minScore: config.MIN_VERIFICATION_SCORE,
+      requireSignatures: config.REQUIRE_COMMIT_SIGNATURES,
       didDomain: config.DID_DOMAIN,
     });
 
@@ -64,7 +64,8 @@ async function main(): Promise<void> {
         config: {
           checkRuns: config.ENABLE_CHECK_RUNS,
           prComments: config.ENABLE_PR_COMMENTS,
-          minScore: config.MIN_VERIFICATION_SCORE,
+          requireSignatures: config.REQUIRE_COMMIT_SIGNATURES,
+          maxCommitsPerPR: config.MAX_COMMITS_PER_PR,
         },
       });
     });

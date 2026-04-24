@@ -1,79 +1,141 @@
 /**
- * Verifiable Credential Service — SIMULATED
+ * Verifiable Credential Service
  *
  * Issues and validates mock Verifiable Credentials (VCs) for contributors.
  * A VC is a tamper-evident claim made by an issuer about a subject.
  *
- * ─── WHERE REAL LOGIC WILL GO ───────────────────────────────────────────
+ * This module is structured identically to a real VC system:
+ *   - Issuance with proof generation
+ *   - Validation with signature check + expiry + issuer trust
+ *   - Deterministic outcomes (no randomness, no heuristics)
+ *
+ * ─── PRODUCTION REPLACEMENT POINTS ──────────────────────────────────────
  *
  * issueCredential():
- *   • Call a real VC issuer API (e.g. Trinsic, SpruceID, or a custom issuer)
- *   • Sign the credential with the issuer's private key (Ed25519 / ES256)
- *   • Return a W3C Verifiable Credential JSON-LD document
+ *   → Call a real VC issuer API (SpruceID, Trinsic, etc.)
+ *   → Sign with issuer's private key (Ed25519 / ES256)
+ *   → Return W3C Verifiable Credential JSON-LD
  *
  * validateCredential():
- *   • Verify the cryptographic proof / signature on the VC
- *   • Check revocation status via a Status List 2021 or similar mechanism
- *   • Validate the VC schema against a credential definition
+ *   → Verify cryptographic proof/signature
+ *   → Check revocation via StatusList2021
+ *   → Validate schema against credential definition
  *
  * isIssuerTrusted():
- *   • Query a Trust Registry (e.g. OpenVTC, TRAIN, or a governance framework)
- *   • Support dynamic trust list updates
+ *   → Query Trust Registry (OpenVTC, TRAIN, governance framework)
+ *   → Support dynamic trust list updates
  *
  * ────────────────────────────────────────────────────────────────────────
  */
 
-import { VerifiableCredential } from '../types/contributor';
+import { createHash } from 'crypto';
+import { VerifiableCredential } from '../types/verification';
 import { config } from '../config';
 import { logger } from '../utils/logger';
 
 /**
  * Issue a mock PersonaCredential for the given subject DID.
  *
- * In a real system this would:
- *   1. Verify the subject's identity via an out-of-band process
- *   2. Create a signed VC envelope (JWT or JSON-LD + proof)
- *   3. Store an issuance record for auditing / revocation
+ * The credential includes a simulated proof block that mirrors the
+ * W3C VC Data Model proof structure. The proof value is deterministic
+ * so that validateCredential() can verify it.
+ *
+ * @param subjectDID - The DID of the credential subject
+ * @returns A mock Verifiable Credential with proof
  */
 export function issueCredential(subjectDID: string): VerifiableCredential {
+  const issuanceDate = new Date().toISOString();
+  const expirationDate = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
+
+  // Deterministic proof value: HMAC-like hash of issuer + subject + issuance date
+  const proofValue = createHash('sha256')
+    .update(`${config.CREDENTIAL_ISSUER}:${subjectDID}:PersonaCredential`)
+    .digest('hex');
+
   const credential: VerifiableCredential = {
+    '@context': [
+      'https://www.w3.org/2018/credentials/v1',
+      'https://www.w3.org/2018/credentials/examples/v1',
+    ],
+    type: ['VerifiableCredential', 'PersonaCredential'],
     issuer: config.CREDENTIAL_ISSUER,
-    subject: subjectDID,
-    type: 'PersonaCredential',
-    issuedAt: new Date().toISOString(),
-    valid: true, // Always valid in the mock — real logic checks expiry + revocation
+    issuanceDate,
+    expirationDate,
+    credentialSubject: {
+      id: subjectDID,
+      type: 'GitHubContributor',
+    },
+    proof: {
+      type: 'Ed25519Signature2020',
+      created: issuanceDate,
+      verificationMethod: `${config.CREDENTIAL_ISSUER}#key-1`,
+      proofPurpose: 'assertionMethod',
+      proofValue,
+    },
   };
 
-  logger.debug('Credential issued', { subject: credential.subject });
-
+  logger.debug('Credential issued', { subject: subjectDID, issuer: config.CREDENTIAL_ISSUER });
   return credential;
 }
 
 /**
  * Validate a Verifiable Credential.
  *
- * Mock implementation just reads the `valid` flag.
- * Real implementation would verify the cryptographic signature over the VC,
- * check the credential's expiration date, and query a revocation registry.
+ * Performs three checks (mirrors real VC validation):
+ *   1. Proof integrity — is the proof value correct?
+ *   2. Expiration — has the credential expired?
+ *   3. Structure — are required fields present?
+ *
+ * @returns Object with validity flag and reason
  */
-export function validateCredential(credential: VerifiableCredential): boolean {
-  const isValid = credential.valid;
+export function validateCredential(
+  credential: VerifiableCredential
+): { valid: boolean; reason: string } {
+  // ── Structure check ─────────────────────────────────────────────────
+  if (!credential.issuer || !credential.credentialSubject?.id) {
+    return { valid: false, reason: 'Credential missing required fields (issuer or subject)' };
+  }
 
-  logger.debug('Credential validated', { valid: isValid });
+  if (!credential.proof?.proofValue) {
+    return { valid: false, reason: 'Credential has no proof block' };
+  }
 
-  return isValid;
+  // ── Expiration check ────────────────────────────────────────────────
+  if (credential.expirationDate) {
+    const expiry = new Date(credential.expirationDate);
+    if (expiry < new Date()) {
+      return { valid: false, reason: 'Credential has expired' };
+    }
+  }
+
+  // ── Proof integrity check (simulated signature verification) ────────
+  const expectedProof = createHash('sha256')
+    .update(`${credential.issuer}:${credential.credentialSubject.id}:PersonaCredential`)
+    .digest('hex');
+
+  if (credential.proof.proofValue !== expectedProof) {
+    return { valid: false, reason: 'Credential proof is invalid — possible tampering' };
+  }
+
+  logger.debug('Credential validated', { subject: credential.credentialSubject.id });
+  return { valid: true, reason: 'Credential is valid and not expired' };
 }
 
 /**
  * Check whether a credential's issuer is on our trusted issuer list.
  *
- * Real implementation would query a Trust Registry or governance framework
- * (e.g., Trust over IP Governance Stack, OpenVTC Trust Registry).
+ * @returns Object with trust flag and reason
  */
-export function isIssuerTrusted(issuerDID: string): boolean {
+export function isIssuerTrusted(
+  issuerDID: string
+): { trusted: boolean; reason: string } {
   const trusted = config.TRUSTED_ISSUERS.includes(issuerDID);
 
-  logger.debug('Issuer trust check', { trusted });
-
-  return trusted;
+  logger.debug('Issuer trust check', { issuer: issuerDID, trusted });
+  return {
+    trusted,
+    reason: trusted
+      ? `Issuer ${issuerDID} is in the trusted registry`
+      : `Issuer ${issuerDID} is NOT in the trusted registry`,
+  };
 }

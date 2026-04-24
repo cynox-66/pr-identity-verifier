@@ -3,41 +3,39 @@
  *
  * Orchestrates the full verification flow when a PR is opened or updated:
  *   1. Extract contributor + PR context from the webhook payload
- *   2. Run the verification pipeline (DID → credential → checks)
- *   3. Report results via GitHub Check Run and/or PR comment
+ *   2. Fetch all PR commits with signature data
+ *   3. Run the deterministic verification pipeline
+ *   4. Report structured results via GitHub API
  *
  * This is the "glue" layer — it has no business logic of its own.
+ * All decisions are made by the verifier service.
  */
 
-import { verifyContributor } from '../services/verifier';
+import { verifyPullRequest } from '../services/verifier';
 import { getGitHubService } from '../services/githubService';
+import { resolveDID, resolveDIDDocument, extractVerificationMethod } from '../services/didResolver';
 import { config } from '../config';
 import { logger } from '../utils/logger';
 import { extractDIDFromText } from '../utils/didExtractor';
-import { Contributor, PullRequestContext } from '../types/contributor';
+import { Contributor, PullRequestContext } from '../types/verification';
 
-// ── Payload extraction helpers ────────────────────────────────────────────
+// ── Payload extraction ────────────────────────────────────────────────────
 
 /**
  * Build a Contributor from the webhook payload.
- *
- * If the contributor has included a DID in the PR body or title, we extract
- * and attach it here. Priority: PR body → PR title (body is more likely to
- * contain structured metadata).
- *
- * FUTURE: Also fetch the contributor's linked DID from a profile service
- *         or on-chain registry before handing off to the pipeline.
+ * Extracts contributor-provided DID from PR body/title if present.
  */
 function extractContributor(payload: any): Contributor {
   const user = payload.pull_request.user;
   const pr = payload.pull_request;
 
-  // ── Extract contributor-provided DID ──────────────────────────────────
-  // Check PR body first (more room for structured metadata), then title
   const providedDid = extractDIDFromText(pr.body) ?? extractDIDFromText(pr.title);
 
   if (providedDid) {
-    logger.info('🪪 DID EXTRACTED', { did: providedDid, source: extractDIDFromText(pr.body) ? 'pr_body' : 'pr_title' });
+    logger.info('🪪 DID EXTRACTED', {
+      did: providedDid,
+      source: extractDIDFromText(pr.body) ? 'pr_body' : 'pr_title',
+    });
   } else {
     logger.info('🪪 DID: none provided — using fallback');
   }
@@ -46,18 +44,7 @@ function extractContributor(payload: any): Contributor {
     username: user.login,
     githubId: user.id,
     avatarUrl: user.avatar_url,
-
-    // Email may be null if the contributor's profile is private
     email: user.email ?? null,
-
-    // We don't know GPG status from the webhook payload itself — this would
-    // come from inspecting the commits via the GitHub API (future enhancement).
-    gpgVerified: null,
-
-    // Will be set to true once the DID resolver runs inside the pipeline.
-    didLinked: false,
-
-    // Contributor-provided DID extracted from PR metadata (if any)
     did: providedDid ?? undefined,
   };
 }
@@ -73,13 +60,22 @@ function extractPRContext(payload: any): PullRequestContext {
     headSha: payload.pull_request.head.sha,
     contributor: extractContributor(payload),
     prUrl: payload.pull_request.html_url,
+    prBody: payload.pull_request.body ?? null,
+    prTitle: payload.pull_request.title,
   };
 }
 
 // ── Main handler ──────────────────────────────────────────────────────────
 
 /**
- * Handle pull_request.opened and pull_request.synchronize events.
+ * Handle pull_request events.
+ *
+ * Flow:
+ *   1. Extract PR context + contributor info
+ *   2. Resolve DID → get public key (needed for mock signature generation)
+ *   3. Fetch PR commits with signatures
+ *   4. Run verification pipeline
+ *   5. Post results to GitHub
  */
 export async function handlePullRequestOpened(
   event: any,
@@ -87,16 +83,41 @@ export async function handlePullRequestOpened(
 ): Promise<void> {
   try {
     const context = extractPRContext(event.payload);
-
-    // Stage header already logged in handler.ts
-
-    // ── Run the verification pipeline ─────────────────────────────────
-    const result = await verifyContributor(context.contributor);
-
-    // ── Report results to GitHub ──────────────────────────────────────
     const github = getGitHubService(githubToken);
 
-    // Primary: Check Run (shows on PR Checks tab)
+    // ── Resolve DID early to get public key for commit fetching ────────
+    // The GitHub service needs the public key to generate mock signatures
+    // that the crypto service can verify. In production, this step would
+    // not be needed — real signatures come from the commits themselves.
+    const didResult = resolveDID(context.contributor.username, context.contributor.did);
+    let publicKeyBase58: string | undefined;
+
+    if (didResult.did) {
+      const docResult = resolveDIDDocument(didResult.did);
+      if (docResult.document) {
+        const vm = extractVerificationMethod(docResult.document);
+        publicKeyBase58 = vm?.publicKeyBase58;
+      }
+    }
+
+    // ── Fetch PR commits with signature data ──────────────────────────
+    const commits = await github.fetchPRCommits(
+      context.repoOwner,
+      context.repoName,
+      context.prNumber,
+      didResult.did ?? undefined,
+      publicKeyBase58
+    );
+
+    logger.info('📦 COMMITS FETCHED', {
+      count: commits.length,
+      shas: commits.map((c) => c.commitSha.slice(0, 7)),
+    });
+
+    // ── Run the verification pipeline ─────────────────────────────────
+    const result = await verifyPullRequest(context, commits);
+
+    // ── Report results to GitHub ──────────────────────────────────────
     if (config.ENABLE_CHECK_RUNS) {
       await github.createCheckRun(
         context.repoOwner,
@@ -107,7 +128,6 @@ export async function handlePullRequestOpened(
       );
     }
 
-    // Optional: legacy PR comment
     if (config.ENABLE_PR_COMMENTS) {
       await github.postVerificationComment(
         context.repoOwner,
@@ -124,7 +144,6 @@ export async function handlePullRequestOpened(
       error: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined,
     });
-    // Don't re-throw — we want the webhook response to succeed even
-    // if the verification pipeline or GitHub API call fails.
+    // Don't re-throw — webhook response must succeed even if pipeline fails.
   }
 }
