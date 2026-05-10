@@ -35,11 +35,49 @@
 
 import { createHash, randomBytes } from 'crypto';
 import { CommitSignatureInfo, VerificationMethod } from '../types/verification';
+import { config } from '../config';
 import { logger } from '../utils/logger';
 
 // ── Seen signatures registry (replay protection) ─────────────────────────
-// In production: use Redis/DB with TTL. In-memory is fine for PoC.
-const seenSignatures = new Map<string, { commitSha: string; verifiedAt: string }>();
+// Bounded with TTL eviction to prevent unbounded memory growth.
+// In production: use Redis/DB with TTL. In-memory with bounds is sufficient for PoC.
+
+interface ReplayEntry {
+  commitSha: string;
+  verifiedAt: string;
+  /** Unix timestamp (ms) for TTL eviction */
+  createdAt: number;
+}
+
+const seenSignatures = new Map<string, ReplayEntry>();
+
+/**
+ * Evict expired entries from the replay registry.
+ * Called lazily before each check to avoid background timers.
+ * Uses LRU-like eviction: oldest entries removed first when over max size.
+ */
+function evictExpiredEntries(): void {
+  const now = Date.now();
+  const ttl = config.REPLAY_REGISTRY_TTL_MS;
+  const maxSize = config.REPLAY_REGISTRY_MAX_SIZE;
+
+  // Phase 1: Remove expired entries
+  for (const [key, entry] of seenSignatures) {
+    if (now - entry.createdAt > ttl) {
+      seenSignatures.delete(key);
+    }
+  }
+
+  // Phase 2: If still over max size, remove oldest entries
+  if (seenSignatures.size > maxSize) {
+    const entries = Array.from(seenSignatures.entries())
+      .sort((a, b) => a[1].createdAt - b[1].createdAt);
+    const toRemove = entries.slice(0, seenSignatures.size - maxSize);
+    for (const [key] of toRemove) {
+      seenSignatures.delete(key);
+    }
+  }
+}
 
 /**
  * Generate a deterministic verification nonce bound to the PR context.
@@ -109,6 +147,8 @@ export function verifyCommitSignature(
   }
 
   // ── Replay protection: check if this signature was already used ─────
+  evictExpiredEntries();
+
   const signatureFingerprint = createHash('sha256')
     .update(commit.signaturePayload)
     .digest('hex');
@@ -149,6 +189,7 @@ export function verifyCommitSignature(
     seenSignatures.set(signatureFingerprint, {
       commitSha: commit.commitSha,
       verifiedAt: new Date().toISOString(),
+      createdAt: Date.now(),
     });
 
     logger.debug('Signature verified successfully', {

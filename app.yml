@@ -1,0 +1,60 @@
+# GitHub App Manifest
+# https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app
+#
+# This manifest defines the permissions and events required by the
+# Hiero Contributor Identity Verifier GitHub App.
+#
+# ─── STATUS ──────────────────────────────────────────────────────────────
+# REAL: This is a production-correct manifest. Use it to register
+#       the GitHub App via GitHub's App creation flow.
+# ─────────────────────────────────────────────────────────────────────────
+
+name: Hiero Identity Verifier
+description: >
+  Cryptographic identity verification for pull requests using
+  Decentralized Identifiers (DIDs) and Verifiable Credentials (VCs).
+  Part of the Linux Foundation Decentralized Trust (LFDT) initiative.
+
+url: https://github.com/hiero-ledger/heka-identity-platform
+
+# ── Permissions ──────────────────────────────────────────────────────────
+# Principle of least privilege: only request what the App needs.
+
+permissions:
+  # Required: Create Check Runs with verification results
+  # (checks.create is ONLY available to GitHub Apps, not PATs)
+  checks: write
+
+  # Required: Read PR metadata, contributor info, commit list
+  pull_requests: read
+
+  # Required: Read commit details including signature verification data
+  contents: read
+
+  # Required: Post/update idempotent PR comments with verification reports
+  issues: write
+
+  # Optional: Read organization membership for trust decisions
+  members: read
+
+# ── Webhook Events ───────────────────────────────────────────────────────
+# The App subscribes to these events:
+
+events:
+  # Trigger verification when a PR is opened or updated
+  - pull_request
+
+  # Handle /verify re-verification commands in PR comments
+  - issue_comment
+
+# ── Webhook Configuration ────────────────────────────────────────────────
+# In production, the webhook URL points to the deployed verification service.
+# During development, use a tunnel service like smee.io or ngrok.
+
+# webhook_url: https://your-deployment.example.com/webhooks/github
+
+# ── Runtime Configuration ────────────────────────────────────────────────
+# These are set via environment variables, not in the manifest:
+#   GITHUB_APP_ID          - App ID from GitHub App settings
+#   GITHUB_APP_PRIVATE_KEY - Private key (.pem) for JWT signing
+#   GITHUB_WEBHOOK_SECRET  - Webhook secret for HMAC verification

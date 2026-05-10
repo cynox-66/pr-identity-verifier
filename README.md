@@ -2,13 +2,15 @@
 
 **Deterministic DID-based identity verification for GitHub pull requests.**
 
-A production-grade verification pipeline that cryptographically verifies contributor identity at the commit level using Decentralized Identifiers (DIDs), Verifiable Credentials (VCs), and commit signature verification.
+A production-transition prototype that cryptographically verifies contributor identity at the commit level using Decentralized Identifiers (DIDs), Verifiable Credentials (VCs), and commit signature verification. Built for the [Linux Foundation Decentralized Trust](https://www.lfdecentralizedtrust.org/) (LFDT) ecosystem.
+
+> **Status:** Production-transition prototype. Core verification pipeline is fully functional.
+> Real Ed25519 cryptography is implemented alongside the deterministic simulation mode.
+> Hedera DID and Heka integration architecture is designed; live integration is the LFX mentorship deliverable.
 
 ---
 
-## System Design
-
-### Architecture
+## Architecture
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -19,13 +21,8 @@ A production-grade verification pipeline that cryptographically verifies contrib
                ▼
 ┌──────────────────────────────────────────────────────────────────┐
 │                     Webhook Handler                              │
+│  HMAC-SHA256 signature verification                              │
 │  Extract PR context, contributor info, DID from PR body/title    │
-└──────────────┬───────────────────────────────────────────────────┘
-               │
-               ▼
-┌──────────────────────────────────────────────────────────────────┐
-│                      GitHub Service                              │
-│  Fetch all PR commits with signature verification data           │
 └──────────────┬───────────────────────────────────────────────────┘
                │
                ▼
@@ -41,6 +38,8 @@ A production-grade verification pipeline that cryptographically verifies contrib
 │  │                 │  │ • Replay protect │  │   trust         │  │
 │  └────────────────┘  └──────────────────┘  └─────────────────┘  │
 │                                                                  │
+│  Mode: simulated (SHA-256) or real_crypto (Ed25519)              │
+│                                                                  │
 │  For EACH commit:                                                │
 │    1. Extract signature                                          │
 │    2. Verify against DID public key                              │
@@ -53,54 +52,44 @@ A production-grade verification pipeline that cryptographically verifies contrib
                ▼
 ┌──────────────────────────────────────────────────────────────────┐
 │                      GitHub Output                               │
+│  • Check Run with verification report (GitHub App auth)          │
 │  • Structured PR comment with per-commit results                 │
-│  • Check Run with verification report (optional)                 │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
 ### Module Separation
 
-| Module | Responsibility | Replaceable |
+| Module | Responsibility | Production Target |
 |---|---|---|
-| `didResolver.ts` | DID validation, resolution, document retrieval | → Universal Resolver API |
-| `cryptoService.ts` | Signature verification, replay protection | → `@noble/ed25519` / `node:crypto` |
-| `credentialService.ts` | VC issuance, proof validation, issuer trust | → Trinsic / SpruceID / custom issuer |
-| `githubService.ts` | GitHub API interactions (commits, comments, checks) | N/A (integration layer) |
-| `verifier.ts` | Pipeline orchestration, aggregation, classification | Core (not replaceable) |
+| `crypto/ed25519.ts` | **Real** Ed25519 key generation, signing, verification | Production-ready (`@noble/ed25519`) |
+| `services/cryptoService.ts` | Simulated verification + bounded replay registry | → `crypto/ed25519.ts` in `real_crypto` mode |
+| `services/didResolver.ts` | DID validation, document resolution, key extraction | → Credo-ts `@credo-ts/hedera` |
+| `services/credentialService.ts` | VC issuance, proof validation, issuer trust | → Heka OID4VP endpoint |
+| `services/verifier.ts` | Pipeline orchestration, aggregation, classification | Core (not replaceable) |
+| `auth/githubApp.ts` | GitHub App JWT + installation token auth | Production-ready (`@octokit/app`) |
+| `experimental/credoAgent.ts` | Credo-ts agent architecture + Hedera DID config | → Live Credo agent in LFX mentorship |
 
 ---
 
-## Verification Pipeline
+## Current State vs. Production Integration
 
-### Flow
-
-```
-PR Opened → Extract Contributor → Resolve DID → Fetch DID Document
-    → Extract Public Key → Fetch Commits → For Each Commit:
-        → Extract Signature → Verify Against Public Key → Check Replay
-        → Validate Credential → Classify Result
-    → Aggregate → Post Result
-```
-
-### Verification Result
-
-```typescript
-type VerificationResult = {
-  didResolved: boolean           // Was the DID successfully resolved?
-  signatureValid: boolean        // Did ALL commit signatures match DID keys?
-  credentialValid: boolean       // Was the associated credential valid?
-  status: 'SUCCESS' | 'HARD_FAIL' | 'SOFT_FAIL'
-  reason: string                 // Human-readable explanation
-  commitResults: CommitVerificationResult[]  // Per-commit details
-  verificationNonce: string      // Replay protection binding
-}
-```
+| Component | Current (PoC) | Production (LFX Mentorship) |
+|---|---|---|
+| **Crypto Verification** | ✅ Real Ed25519 via `@noble/ed25519` + simulated mode | Delegated to Credo-ts agent |
+| **DID Resolution** | Simulated (deterministic mock documents) | `@credo-ts/hedera` → Hedera HCS resolution |
+| **VC Validation** | Simulated (self-issued, self-verified) | Heka OID4VP endpoint |
+| **GitHub Auth** | ✅ `@octokit/app` architecture (JWT + installation tokens) | Deployed GitHub App |
+| **Replay Protection** | ✅ Bounded in-memory registry with TTL eviction | Redis/DB with TTL |
+| **Trust Registry** | Static env var list | Dynamic Heka trust registry query |
+| **DID Cache** | ✅ Configurable TTL + max size | Same, tuned for Hedera HCS latency |
+| **Contributor Onboarding** | Not implemented | Heka Web UI (4-step flow) |
+| **Linked VP Discovery** | Not implemented | DID Document service endpoint |
 
 ---
 
-## Failure Model
+## Verification Model
 
-### Classification Rules
+### Failure Classification
 
 | Status | Meaning | Trigger Conditions |
 |---|---|---|
@@ -111,62 +100,132 @@ type VerificationResult = {
 ### Aggregation Rule
 
 ```
-PR Status = strictest(commit_statuses)
-
 If ANY commit is HARD_FAIL → PR is HARD_FAIL
 If ANY commit is SOFT_FAIL (and none HARD_FAIL) → PR is SOFT_FAIL
 If ALL commits are SUCCESS → PR is SUCCESS
 ```
 
-### Why This Matters
+### Why Deterministic Classification
 
-**Heuristic scores are fundamentally broken for identity verification:**
+Heuristic scores are fundamentally broken for identity verification:
 - A score of 80/100 tells you nothing — is the identity valid or not?
 - Scores create false confidence: "almost verified" is unverified
 - Scores can be gamed by optimizing for weight distribution
 
-**Deterministic classification gives actionable answers:**
+Deterministic classification gives actionable answers:
 - `SUCCESS` = merge with confidence
 - `HARD_FAIL` = block and investigate
 - `SOFT_FAIL` = request additional verification
 
+> **Note:** The LFX mentorship production system uses a weighted scoring model
+> (6-check pipeline with threshold ≥60) for gradual adoption during the
+> ecosystem's transition to SSI. This PoC demonstrates the strict deterministic
+> model; the scoring model is an intentional design evolution for production.
+
 ---
 
-## Cryptographic Design
+## Real Cryptography
 
-### Ownership Proof Flow
+This repository includes **real Ed25519 cryptographic operations** via `@noble/ed25519` — a zero-dependency, audited implementation.
+
+### What Is Real
 
 ```
-Contributor has DID → DID Document contains Public Key
-Commit has Signature → Verify Signature against Public Key
-Match → Identity proven (the person who controls the DID signed this commit)
-Mismatch → Identity spoofing detected
+src/crypto/ed25519.ts:
+  ✅ Ed25519 keypair generation (random + deterministic from seed)
+  ✅ Ed25519 message signing (64-byte signatures)
+  ✅ Ed25519 signature verification
+  ✅ Commit-SHA-bound signature verification
+  ✅ Hex encoding/decoding utilities
+  ✅ Input validation (length, format, malformed data)
+
+25 tests covering:
+  ✅ Key generation correctness
+  ✅ Sign-and-verify round trip
+  ✅ Tampered message detection
+  ✅ Wrong key detection (identity spoofing)
+  ✅ Malformed input handling
+  ✅ Edge cases (empty inputs, wrong lengths, bad hex)
 ```
+
+### Verification Modes
+
+| Mode | Config | Crypto | Use Case |
+|---|---|---|---|
+| `simulated` (default) | `VERIFICATION_MODE=simulated` | SHA-256 hash comparison | Testing, demo, deterministic |
+| `real_crypto` | `VERIFICATION_MODE=real_crypto` | Ed25519 via @noble/ed25519 | Production-transition proof |
+
+---
+
+## GitHub App Authentication
+
+The PoC includes a production-correct GitHub App authentication architecture via `@octokit/app`:
+
+```
+src/auth/githubApp.ts:
+  ✅ GitHub App initialization (JWT + private key)
+  ✅ Installation-scoped Octokit instances
+  ✅ Auto-rotating installation access tokens
+  ✅ Installation ID extraction from webhook payloads
+
+app.yml:
+  ✅ Permission manifest (checks:write, pull_requests:read, contents:read)
+  ✅ Webhook event subscriptions (pull_request, issue_comment)
+```
+
+> **Note:** The current webhook handler still uses a PAT for API calls.
+> The `auth/githubApp.ts` module provides the production architecture
+> that replaces PAT-based auth with proper GitHub App installation tokens.
+
+---
+
+## Experimental: Credo-ts + Hedera DID
+
+The `experimental/` directory contains the Credo-ts agent architecture for Hedera DID resolution:
+
+```
+src/experimental/credoAgent.ts:
+  ✅ Correct Credo-ts agent configuration pattern
+  ✅ HederaModule + HederaDidResolver setup
+  ✅ Hedera mirror node configuration (mainnet/testnet/previewnet)
+  ✅ DID resolution flow (HCS message replay)
+  ✅ Verifier-only agent mode (no wallet, no issuance)
+```
+
+This module demonstrates the exact integration pattern used by `heka-identity-service`.
+Full live Hedera DID resolution is the primary LFX mentorship deliverable.
+
+---
+
+## Security Design
+
+### Threat Model
+
+| Threat | Mitigation | Status |
+|---|---|---|
+| **DID Spoofing** | Signature verification binds DID to commit | ✅ Tested |
+| **Signature Forgery** | Real Ed25519 verification (or simulated equivalent) | ✅ Tested |
+| **Credential Tampering** | Proof integrity + subject binding check | ✅ Tested |
+| **Replay Attacks** | SHA-bound signature registry with TTL eviction | ✅ Tested |
+| **DID Injection** | Regex validation + W3C DID syntax enforcement | ✅ Tested |
+| **Registry Memory Leak** | Bounded size + TTL eviction (configurable) | ✅ Implemented |
+| **Webhook Forgery** | HMAC-SHA256 signature verification (@octokit/webhooks) | ✅ Implemented |
+| **Token Leakage** | GitHub App installation tokens (auto-rotating, scoped) | ✅ Architecture |
 
 ### Replay Protection
 
 Each signature is bound to its commit SHA:
 
 ```
-Signature S was used to verify commit C₁
-If S is reused for commit C₂ (where C₂ ≠ C₁) → REJECT (replay attack)
-If S is reused for commit C₁ again → ACCEPT (idempotent re-verification)
+Signature S used to verify commit C₁
+If S reused for commit C₂ (C₂ ≠ C₁) → REJECT (replay attack)
+If S reused for commit C₁ again → ACCEPT (idempotent re-verification)
 ```
 
-### Simulation Architecture
-
-The cryptographic operations are **simulated** but structured **identically** to a real system:
-
-```
-Real System:                          Simulated System:
-─────────────                         ──────────────────
-1. Extract GPG/SSH signature          1. Extract signature payload
-2. Parse key from DID Document        2. Parse key from DID Document
-3. crypto.verify(sig, data, pubKey)   3. SHA256(commitSha + pubKey) === sig
-4. Check replay registry              4. Check replay registry
-```
-
-**To swap in real crypto**, change ONLY `verifyCommitSignature()` in `cryptoService.ts`. Everything else (pipeline, aggregation, replay, output) works unchanged.
+The replay registry is bounded:
+- **Max entries:** 10,000 (configurable via `REPLAY_REGISTRY_MAX_SIZE`)
+- **Entry TTL:** 1 hour (configurable via `REPLAY_REGISTRY_TTL_MS`)
+- **Eviction:** Lazy (on check), oldest-first when over capacity
 
 ---
 
@@ -175,7 +234,7 @@ Real System:                          Simulated System:
 ### Prerequisites
 
 - Node.js 18+
-- GitHub App with webhook configured
+- GitHub App with webhook configured (or PAT for development)
 
 ### Installation
 
@@ -191,28 +250,24 @@ cp .env.example .env
 
 | Variable | Description | Default |
 |---|---|---|
-| `GITHUB_WEBHOOK_SECRET` | Webhook secret for signature verification | Required |
-| `GITHUB_TOKEN` | GitHub App token for API access | Required |
+| `GITHUB_WEBHOOK_SECRET` | Webhook secret for HMAC verification | Required |
+| `GITHUB_TOKEN` | GitHub token for API access | Required |
+| `VERIFICATION_MODE` | `simulated` or `real_crypto` | `simulated` |
 | `ENABLE_CHECK_RUNS` | Create GitHub Check Runs | `true` |
 | `ENABLE_PR_COMMENTS` | Post PR comments with results | `false` |
-| `REQUIRE_COMMIT_SIGNATURES` | Unsigned = HARD_FAIL (vs SOFT_FAIL) | `false` |
-| `MAX_COMMITS_PER_PR` | Safety limit for commit count | `250` |
-| `DID_DOMAIN` | Domain for mock did:web identifiers | `example.com` |
-| `CREDENTIAL_ISSUER` | Mock credential issuer DID | `did:web:issuer.example` |
-| `TRUSTED_ISSUERS` | Comma-separated trusted issuer DIDs | `did:web:issuer.example` |
+| `REQUIRE_COMMIT_SIGNATURES` | Unsigned = HARD_FAIL | `false` |
+| `MAX_COMMITS_PER_PR` | Safety limit | `250` |
+| `REPLAY_REGISTRY_MAX_SIZE` | Max replay registry entries | `10000` |
+| `REPLAY_REGISTRY_TTL_MS` | Replay entry TTL (ms) | `3600000` |
+| `DID_CACHE_TTL_MS` | DID Document cache TTL (ms) | `300000` |
 
 ### Running
 
 ```bash
-# Development
-npm run dev
-
-# Production
-npm run build
-npm start
-
-# Expose webhook (for testing)
-npx smee -u <YOUR_SMEE_URL> -p 3000 -P /webhooks/github
+npm run dev          # Development (ts-node)
+npm run build        # Compile TypeScript
+npm start            # Production (compiled JS)
+npm run typecheck    # Type checking only
 ```
 
 ---
@@ -222,51 +277,34 @@ npx smee -u <YOUR_SMEE_URL> -p 3000 -P /webhooks/github
 ### Test Suite
 
 ```bash
-npm test              # Run all tests
-npm run test:unit     # Unit tests only
-npm run test:integration   # Integration tests
-npm run test:adversarial   # Security/attack tests
-npm run test:concurrency   # Parallel/rapid commit tests
-npm run test:coverage      # With coverage report
+npm test                    # Run all tests (113 total)
+npm run test:unit           # Unit tests (71 tests)
+npm run test:integration    # Integration tests (13 tests)
+npm run test:adversarial    # Security/attack tests (11 tests + DID spoofing)
+npm run test:concurrency    # Parallel load tests (4 tests)
+npm run test:coverage       # With coverage report
 ```
 
 ### Test Categories
 
 | Category | Tests | What They Prove |
 |---|---|---|
-| **Unit** | 46 | Individual module correctness (DID, crypto, credentials, extractor) |
-| **Integration** | 13 | Full pipeline end-to-end (DID → signature → credential → result) |
-| **Adversarial** | 11 | System guarantees under attack (spoofing, forgery, replay, injection) |
+| **Unit** | 71 | Module correctness (DID, crypto, credentials, extractor, **Ed25519**, replay registry) |
+| **Integration** | 13 | Full pipeline (DID → signature → credential → result) |
+| **Adversarial** | 11 | System guarantees (spoofing, forgery, replay, injection, tampering) |
 | **Concurrency** | 4 | Correctness under parallel load (rapid commits, concurrent PRs) |
-| **Total** | **83** | |
+| **Total** | **113** | |
 
-### Key Test Scenarios
+### Key Security Guarantees (Tested)
 
-**Adversarial (Security Guarantees):**
 - ✅ DID spoofing detected (attacker claims another's DID → signature mismatch)
-- ✅ Fabricated signatures rejected
-- ✅ Credential tampering detected (modified proof, subject swap)
-- ✅ Replay attacks blocked (cross-commit signature reuse)
-- ✅ DID injection prevented (path traversal, script injection)
-
-**Integration (System Correctness):**
-- ✅ Single commit SUCCESS path
-- ✅ Multi-commit SUCCESS path
-- ✅ ANY commit fail → PR HARD_FAIL (strict aggregation)
-- ✅ Unsigned commits → SOFT_FAIL (when signatures not required)
-- ✅ Empty PR handled gracefully
-- ✅ Contributor-provided DID supported
-
-### Coverage
-
-```
-Core Service Coverage:
-  cryptoService.ts     | 100% statements, 100% branches
-  credentialService.ts | 100% statements, 92% branches
-  didResolver.ts       |  94% statements, 90% branches
-  verifier.ts          |  93% statements, 83% branches
-  config.ts            | 100%
-```
+- ✅ Fabricated signatures rejected (both simulated and real Ed25519)
+- ✅ Credential tampering detected (modified proof, subject swap, removed proof)
+- ✅ Replay attacks blocked (cross-commit signature reuse → REJECT)
+- ✅ DID injection prevented (path traversal, script injection → HARD_FAIL)
+- ✅ Tampered message detection (single byte change → verification failure)
+- ✅ Wrong key detection (Eve's key vs Alice's DID → HARD_FAIL)
+- ✅ Malformed crypto input handling (wrong lengths, bad hex, empty data)
 
 ---
 
@@ -284,14 +322,6 @@ Core Service Coverage:
 | **Status** | 🟢 **VERIFIED** |
 | **Commits** | 3/3 passed |
 
-### 📋 Verification Summary
-
-| Check | Result |
-|---|---|
-| DID Resolved | ✅ Yes |
-| Signature Valid | ✅ Yes |
-| Credential Valid | ✅ Yes |
-
 ### 🔍 Per-Commit Results
 
 | Commit | Signature | Credential | Status | Reason |
@@ -301,7 +331,7 @@ Core Service Coverage:
 | `7b8c9d0` | ✅ | ✅ | 🟢 SUCCESS | Verified against DID public key |
 ```
 
-### HARD_FAIL (Spoofed DID)
+### HARD_FAIL (Identity Spoofing Detected)
 
 ```
 ## 🔐 Identity Verification Report
@@ -321,19 +351,15 @@ Core Service Coverage:
 
 ---
 
-## What Was Changed (v0.1 → v1.0)
+## Production Roadmap
 
-| Area | Before (PoC) | After (Production) |
-|---|---|---|
-| **Identity Proof** | Regex DID extraction only | Commit signature verification against DID public keys |
-| **Scoring** | Heuristic 0-100 score | Deterministic SUCCESS/HARD_FAIL/SOFT_FAIL |
-| **Commit Handling** | Single contributor check | Per-commit verification with strict aggregation |
-| **Replay Protection** | None | SHA-bound signature registry |
-| **Credential Validation** | `valid: true` always | Proof integrity + expiry + issuer trust |
-| **Failure Handling** | Generic error | Classified (HARD_FAIL vs SOFT_FAIL) |
-| **Output** | Basic comment | Structured per-commit report with failure details |
-| **Tests** | 0 | 83 (unit + integration + adversarial + concurrency) |
-| **Types** | Loose interfaces | Strict verification contracts |
+This prototype is designed for the [LFX Mentorship 2026](https://mentorship.lfx.linuxfoundation.org/) — Hiero Contributor Identity Verification. The production integration path:
+
+1. **Replace mock DID resolution** with `@credo-ts/hedera` (Hedera HCS)
+2. **Replace mock VC validation** with Heka OID4VP endpoint
+3. **Deploy GitHub App** with `@octokit/app` installation token auth
+4. **Build contributor onboarding** in Heka Identity Platform Web UI
+5. **Deploy to Hiero repository** for live verification demo
 
 ---
 

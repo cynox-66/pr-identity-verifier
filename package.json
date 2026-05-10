@@ -29,6 +29,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@noble/ed25519": "^2.2.3",
+    "@octokit/app": "^15.1.2",
     "@octokit/rest": "^20.0.2",
     "@octokit/webhooks": "^13.0.0",
     "dotenv": "^16.4.5",

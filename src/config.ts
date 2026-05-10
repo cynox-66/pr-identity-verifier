@@ -8,6 +8,17 @@
  * verification (SUCCESS / HARD_FAIL / SOFT_FAIL) instead of heuristic scores.
  */
 
+import { VerificationMode } from './crypto/types';
+
+/**
+ * Parse and validate the VERIFICATION_MODE environment variable.
+ */
+function parseVerificationMode(): VerificationMode {
+  const mode = process.env.VERIFICATION_MODE;
+  if (mode === 'real_crypto') return 'real_crypto';
+  return 'simulated';
+}
+
 export const config = {
   /** When true, create a GitHub Check Run with structured output on each PR */
   ENABLE_CHECK_RUNS: process.env.ENABLE_CHECK_RUNS !== 'false',
@@ -38,4 +49,39 @@ export const config = {
    * Safety bound to prevent abuse on PRs with thousands of commits.
    */
   MAX_COMMITS_PER_PR: parseInt(process.env.MAX_COMMITS_PER_PR || '250', 10),
+
+  // ── Verification Mode ────────────────────────────────────────────────
+
+  /**
+   * Crypto verification mode:
+   *   'simulated'  — SHA-256 hash comparison (default, deterministic)
+   *   'real_crypto' — Real Ed25519 via @noble/ed25519
+   */
+  VERIFICATION_MODE: parseVerificationMode(),
+
+  // ── Security Tuning ──────────────────────────────────────────────────
+
+  /**
+   * Maximum entries in the replay protection registry before eviction.
+   * Prevents unbounded memory growth in long-running processes.
+   */
+  REPLAY_REGISTRY_MAX_SIZE: parseInt(process.env.REPLAY_REGISTRY_MAX_SIZE || '10000', 10),
+
+  /**
+   * TTL for replay registry entries in milliseconds.
+   * Entries older than this are eligible for eviction. Default: 1 hour.
+   */
+  REPLAY_REGISTRY_TTL_MS: parseInt(process.env.REPLAY_REGISTRY_TTL_MS || '3600000', 10),
+
+  /**
+   * TTL for DID Document cache entries in milliseconds.
+   * Default: 5 minutes. In production, Hedera HCS resolution is expensive
+   * and DID Documents change infrequently.
+   */
+  DID_CACHE_TTL_MS: parseInt(process.env.DID_CACHE_TTL_MS || '300000', 10),
+
+  /**
+   * Maximum entries in the DID Document cache.
+   */
+  DID_CACHE_MAX_SIZE: parseInt(process.env.DID_CACHE_MAX_SIZE || '1000', 10),
 } as const;
