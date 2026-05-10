@@ -36,7 +36,7 @@ This project intercepts pull request events and runs a deterministic cryptograph
 **Live Webhook Delivery**
 ![Webhook Delivery](./poc-demo-assets/screenshots/ngrok-webhook.png)
 
-[▶ Watch Demo Video](./poc-demo-assets/demo-video.mp4)
+[▶ Watch Demo Video](./poc-demo-assets/recordings/demo-video.mp4)
 
 ---
 
