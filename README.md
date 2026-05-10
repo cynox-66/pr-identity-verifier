@@ -31,12 +31,12 @@ This project intercepts pull request events and runs a deterministic cryptograph
 > End-to-end verification validated through a live GitHub webhook flow using ngrok, real PR events, and Ed25519 commit signature verification.
 
 **Verification Pipeline**
-![Verification Pipeline](./poc-demo-assets/screenshots/verification-pipeline.png)
+![Verification Pipeline](./poc%20demo%20assests/poc-demo-assets/screenshots/verification-pipeline.png)
 
 **Live Webhook Delivery**
-![Webhook Delivery](./poc-demo-assets/screenshots/ngrok-webhook.png)
+![Webhook Delivery](./poc%20demo%20assests/poc-demo-assets/screenshots/ngrok-webhook.png)
 
-[▶ Watch Demo Video](./poc-demo-assets/recordings/demo-video.mp4)
+[▶ Watch Demo Video](./poc%20demo%20assests/poc-demo-assets/recordings/demo-video.mp4)
 
 ---
 
