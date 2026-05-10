@@ -1,0 +1,258 @@
+  console.log
+    [2026-05-10T13:39:53.104Z] [DEBUG] Generated fallback mock DID {"username":"eve","did":"did:web:example.com:users:eve"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.115Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:eve","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.115Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"eve","prNumber":99,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.116Z] [DEBUG] Resolved contributor-provided DID {"username":"eve","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.117Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.117Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.117Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.118Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.118Z] [DEBUG] Signature mismatch {"sha":"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.119Z] [INFO] ❌ VERIFICATION COMPLETE {"status":"HARD_FAIL","passed":"0/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.122Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":99,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.123Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.123Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.123Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.124Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.124Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.124Z] [DEBUG] Signature mismatch {"sha":"ffffffffffffffffffffffffffffffffffffffff","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.125Z] [INFO] ❌ VERIFICATION COMPLETE {"status":"HARD_FAIL","passed":"0/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.126Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":99,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.126Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.126Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.126Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.127Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.127Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.127Z] [DEBUG] No signature on commit {"sha":"ffffffffffffffffffffffffffffffffffffffff"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.127Z] [INFO] ❌ VERIFICATION COMPLETE {"status":"HARD_FAIL","passed":"0/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.128Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.128Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.129Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.129Z] [DEBUG] Signature verified successfully {"sha":"1111111111111111111111111111111111111111","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:53.130Z] [WARN] Replay attack detected: signature reuse {"currentCommit":"2222222222222222222222222222222222222222","previousCommit":"1111111111111111111111111111111111111111"}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyCommitSignature (src/services/cryptoService.ts:158:12)
+      at Object.<anonymous> (tests/adversarial/security.test.ts:189:39)
+
+  console.log
+    [2026-05-10T13:39:53.131Z] [DEBUG] Signature verified successfully {"sha":"3333333333333333333333333333333333333333","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.131Z] [DEBUG] Signature verified successfully {"sha":"3333333333333333333333333333333333333333","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:53.132Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":99,"totalCommits":0}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:53.132Z] [WARN] PR has no commits {"prNumber":99}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyPullRequest (src/services/verifier.ts:74:12)
+      at Object.<anonymous> (tests/adversarial/security.test.ts:235:45)
+
+  console.log
+    [2026-05-10T13:39:53.132Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":99,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:53.133Z] [WARN] Contributor-provided DID is invalid {"username":"alice","did":"did:web:<script>alert(1)</script>","reason":"Malformed DID syntax: \"did:web:<script>alert(1)</script>\""}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at resolveDID (src/services/didResolver.ts:78:14)
+      at verifyPullRequest (src/services/verifier.ts:114:31)
+      at Object.<anonymous> (tests/adversarial/security.test.ts:260:45)
+
+  console.warn
+    [2026-05-10T13:39:53.133Z] [WARN] DID resolution failed {"username":"alice","error":"Malformed DID syntax: \"did:web:<script>alert(1)</script>\""}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyPullRequest (src/services/verifier.ts:117:12)
+      at Object.<anonymous> (tests/adversarial/security.test.ts:260:45)
+
+PASS tests/adversarial/security.test.ts
+  Adversarial Tests
+    DID Spoofing
+      ✓ should DETECT when attacker claims another user's DID (19 ms)
+    Signature Forgery
+      ✓ should REJECT fabricated signatures (3 ms)
+      ✓ should REJECT empty signature payload (3 ms)
+    Credential Tampering
+      ✓ should DETECT tampered credential proof
+      ✓ should DETECT credential subject swap (1 ms)
+      ✓ should DETECT credential with removed proof
+    Replay Attacks
+      ✓ should DETECT cross-commit signature replay (2 ms)
+      ✓ should allow same signature for same commit (re-verification)
+    DID Injection
+      ✓ should REJECT DID containing path traversal (1 ms)
+      ✓ should REJECT DID with script injection (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       10 passed, 10 total
+Snapshots:   0 total
+Time:        0.928 s, estimated 4 s
+Ran all test suites matching /tests\/adversarial/i.

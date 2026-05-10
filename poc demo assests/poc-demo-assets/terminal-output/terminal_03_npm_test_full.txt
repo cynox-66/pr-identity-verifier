@@ -1,0 +1,2995 @@
+
+> github-identity-verifier@1.0.0 test
+> jest
+
+PASS tests/unit/didExtractor.test.ts
+  DID Extractor
+    ✓ should extract did:key from text (5 ms)
+    ✓ should extract did:web from text
+    ✓ should return null for text without DID
+    ✓ should return null for null input
+    ✓ should return null for undefined input
+    ✓ should return null for empty string
+    ✓ should extract first DID when multiple are present
+    ✓ should handle DID embedded in markdown
+
+  console.log
+    [2026-05-10T13:39:37.116Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.142Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.143Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.143Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.144Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:bob","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.144Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.105Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.145Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.145Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.145Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.146Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000000","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.146Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.146Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.146Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000001","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.147Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000002","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.147Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.147Z] [DEBUG] Issuer trust check {"issuer":"did:web:evil-issuer.example","trusted":false}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.148Z] [DEBUG] Issuer trust check {"issuer":"","trusted":false}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.147Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000003","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+PASS tests/unit/credentialService.test.ts
+  Credential Service
+    issueCredential()
+      ✓ should issue credential with correct structure (37 ms)
+      ✓ should include proof block (1 ms)
+      ✓ should set expiration date in the future
+      ✓ should produce different proofs for different subjects (1 ms)
+    validateCredential()
+      ✓ should PASS for correctly issued credential (1 ms)
+      ✓ should FAIL for tampered proof value
+      ✓ should FAIL for missing proof block (1 ms)
+      ✓ should FAIL for expired credential
+      ✓ should FAIL for missing required fields
+      ✓ should FAIL for credential with wrong subject (swapped subject) (1 ms)
+    isIssuerTrusted()
+      ✓ should trust configured issuer
+      ✓ should NOT trust unknown issuer (1 ms)
+      ✓ should NOT trust empty string
+
+  console.log
+    [2026-05-10T13:39:37.149Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000004","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.150Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000005","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.151Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000006","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.152Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000007","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.154Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000008","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.156Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000009","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.160Z] [DEBUG] Signature verified successfully {"sha":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.162Z] [DEBUG] Signature verified successfully {"sha":"cccccccccccccccccccccccccccccccccccccccc","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.162Z] [DEBUG] Signature verified successfully {"sha":"cccccccccccccccccccccccccccccccccccccccc","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.163Z] [DEBUG] Signature verified successfully {"sha":"dddddddddddddddddddddddddddddddddddddddd","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:37.163Z] [WARN] Replay attack detected: signature reuse {"currentCommit":"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","previousCommit":"dddddddddddddddddddddddddddddddddddddddd"}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyCommitSignature (src/services/cryptoService.ts:158:12)
+      at Object.<anonymous> (tests/unit/replayRegistry.test.ts:120:37)
+
+PASS tests/unit/replayRegistry.test.ts
+  Replay Registry (TTL + Bounds)
+    ✓ should record verified signatures in the registry (50 ms)
+    ✓ should grow registry with unique signatures (15 ms)
+    ✓ should clear the registry completely (1 ms)
+    ✓ should allow idempotent re-verification of same commit (2 ms)
+    ✓ should detect replay attacks (cross-commit reuse) (4 ms)
+
+  console.log
+    [2026-05-10T13:39:37.177Z] [DEBUG] Resolved contributor-provided DID {"username":"alice","did":"did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:37.206Z] [WARN] Contributor-provided DID is invalid {"username":"alice","did":"not-a-did","reason":"Malformed DID syntax: \"not-a-did\""}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at resolveDID (src/services/didResolver.ts:78:14)
+      at Object.<anonymous> (tests/unit/didResolver.test.ts:61:32)
+
+  console.log
+    [2026-05-10T13:39:37.208Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.208Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.209Z] [DEBUG] Generated fallback mock DID {"username":"bob","did":"did:web:example.com:users:bob"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.209Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.210Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.210Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.211Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.211Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.211Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:bob","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.214Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.218Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.227Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:37.252Z] [WARN] DID Document has no verification methods {"did":"did:web:test"}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at extractVerificationMethod (src/services/didResolver.ts:164:12)
+      at Object.<anonymous> (tests/unit/didResolver.test.ts:142:43)
+
+  console.log
+    [2026-05-10T13:39:37.209Z] [DEBUG] Generated fallback mock DID {"username":"eve","did":"did:web:example.com:users:eve"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.264Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:eve","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.265Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"eve","prNumber":99,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.268Z] [DEBUG] Resolved contributor-provided DID {"username":"eve","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.268Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+PASS tests/unit/didResolver.test.ts
+  DID Resolver
+    validateDID()
+      ✓ should accept valid did:key (2 ms)
+      ✓ should accept valid did:web
+      ✓ should reject empty string (1 ms)
+      ✓ should reject malformed DID (no method)
+      ✓ should reject unsupported DID method
+      ✓ should reject DID with special characters
+      ✓ should reject null/undefined (via type coercion)
+    resolveDID()
+      ✓ should use contributor-provided DID when valid (29 ms)
+      ✓ should reject invalid contributor-provided DID (2 ms)
+      ✓ should generate fallback DID when none provided
+      ✓ should generate different DIDs for different usernames (1 ms)
+    resolveDIDDocument()
+      ✓ should return valid DID Document for valid DID (1 ms)
+      ✓ should include public key material in verification method
+      ✓ should return deterministic keys for same DID (1 ms)
+      ✓ should return different keys for different DIDs (1 ms)
+      ✓ should fail for invalid DID (2 ms)
+      ✓ should include authentication reference (2 ms)
+      ✓ should include service endpoints (11 ms)
+    extractVerificationMethod()
+      ✓ should extract the primary verification method (25 ms)
+      ✓ should return null for document with no methods (1 ms)
+
+  console.log
+    [2026-05-10T13:39:37.269Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.269Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.270Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.270Z] [DEBUG] Signature mismatch {"sha":"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.271Z] [INFO] ❌ VERIFICATION COMPLETE {"status":"HARD_FAIL","passed":"0/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.205Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.272Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":99,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.272Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.273Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.274Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.273Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.275Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.275Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.276Z] [DEBUG] Signature mismatch {"sha":"ffffffffffffffffffffffffffffffffffffffff","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.277Z] [INFO] ❌ VERIFICATION COMPLETE {"status":"HARD_FAIL","passed":"0/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.275Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.278Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":99,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.279Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.279Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.280Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.280Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.281Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.281Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.282Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.283Z] [DEBUG] No signature on commit {"sha":"ffffffffffffffffffffffffffffffffffffffff"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.283Z] [INFO] ❌ VERIFICATION COMPLETE {"status":"HARD_FAIL","passed":"0/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.282Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.284Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.284Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.284Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.285Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.286Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.286Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.287Z] [DEBUG] Signature verified successfully {"sha":"1111111111111111111111111111111111111111","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.287Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"1/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.288Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.289Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.289Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":3}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.290Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.290Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.291Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:37.287Z] [WARN] Replay attack detected: signature reuse {"currentCommit":"2222222222222222222222222222222222222222","previousCommit":"1111111111111111111111111111111111111111"}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyCommitSignature (src/services/cryptoService.ts:158:12)
+      at Object.<anonymous> (tests/adversarial/security.test.ts:189:39)
+
+  console.log
+    [2026-05-10T13:39:37.292Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.292Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.292Z] [DEBUG] Signature verified successfully {"sha":"3333333333333333333333333333333333333333","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.293Z] [DEBUG] Signature verified successfully {"sha":"3333333333333333333333333333333333333333","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.293Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":99,"totalCommits":0}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:37.293Z] [WARN] PR has no commits {"prNumber":99}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyPullRequest (src/services/verifier.ts:74:12)
+      at Object.<anonymous> (tests/adversarial/security.test.ts:235:45)
+
+  console.log
+    [2026-05-10T13:39:37.295Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":99,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:37.296Z] [WARN] Contributor-provided DID is invalid {"username":"alice","did":"did:web:<script>alert(1)</script>","reason":"Malformed DID syntax: \"did:web:<script>alert(1)</script>\""}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at resolveDID (src/services/didResolver.ts:78:14)
+      at verifyPullRequest (src/services/verifier.ts:114:31)
+      at Object.<anonymous> (tests/adversarial/security.test.ts:260:45)
+
+  console.log
+    [2026-05-10T13:39:37.293Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:37.296Z] [WARN] DID resolution failed {"username":"alice","error":"Malformed DID syntax: \"did:web:<script>alert(1)</script>\""}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyPullRequest (src/services/verifier.ts:117:12)
+      at Object.<anonymous> (tests/adversarial/security.test.ts:260:45)
+
+  console.log
+    [2026-05-10T13:39:37.296Z] [DEBUG] Signature verified successfully {"sha":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+PASS tests/adversarial/security.test.ts
+  Adversarial Tests
+    DID Spoofing
+      ✓ should DETECT when attacker claims another user's DID (66 ms)
+    Signature Forgery
+      ✓ should REJECT fabricated signatures (6 ms)
+      ✓ should REJECT empty signature payload (6 ms)
+    Credential Tampering
+      ✓ should DETECT tampered credential proof
+      ✓ should DETECT credential subject swap (2 ms)
+      ✓ should DETECT credential with removed proof
+    Replay Attacks
+      ✓ should DETECT cross-commit signature replay (5 ms)
+      ✓ should allow same signature for same commit (re-verification) (1 ms)
+    DID Injection
+      ✓ should REJECT DID containing path traversal (2 ms)
+      ✓ should REJECT DID with script injection (2 ms)
+
+  console.log
+    [2026-05-10T13:39:37.298Z] [DEBUG] Signature verified successfully {"sha":"cccccccccccccccccccccccccccccccccccccccc","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.298Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"3/3","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.299Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.299Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.299Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":2}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.300Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.300Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.300Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.300Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.301Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.278Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.302Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.303Z] [DEBUG] Signature verified successfully {"sha":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.303Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.304Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.304Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"2/2","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.305Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.305Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.305Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.306Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.306Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.306Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.307Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.307Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.307Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.309Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.308Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.309Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.310Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.310Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.310Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.310Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.310Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.311Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.310Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.311Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.311Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.311Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"1/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.311Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.312Z] [DEBUG] Generated fallback mock DID {"username":"bob","did":"did:web:example.com:users:bob"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.312Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.312Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:bob","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.312Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.312Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.312Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.313Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.313Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.313Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.313Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.313Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.313Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.313Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.313Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.314Z] [DEBUG] Signature mismatch {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.314Z] [INFO] ❌ VERIFICATION COMPLETE {"status":"HARD_FAIL","passed":"0/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.314Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:37.315Z] [WARN] Contributor-provided DID is invalid {"username":"alice","did":"not-a-valid-did","reason":"Malformed DID syntax: \"not-a-valid-did\""}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at resolveDID (src/services/didResolver.ts:78:14)
+      at verifyPullRequest (src/services/verifier.ts:114:31)
+      at Object.<anonymous> (tests/integration/pipeline.test.ts:161:45)
+
+  console.warn
+    [2026-05-10T13:39:37.316Z] [WARN] DID resolution failed {"username":"alice","error":"Malformed DID syntax: \"not-a-valid-did\""}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyPullRequest (src/services/verifier.ts:117:12)
+      at Object.<anonymous> (tests/integration/pipeline.test.ts:161:45)
+
+  console.log
+    [2026-05-10T13:39:37.316Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.316Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.314Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.318Z] [DEBUG] Generated fallback mock DID {"username":"bob","did":"did:web:example.com:users:bob"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.319Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.319Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.320Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.319Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:bob","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.320Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":3}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.322Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.325Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.326Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.320Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.326Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.327Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.327Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.327Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.327Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.328Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.328Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.329Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.329Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.330Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.327Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.330Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.330Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.330Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.330Z] [DEBUG] Signature mismatch {"sha":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.331Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.331Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.331Z] [DEBUG] Signature verified successfully {"sha":"cccccccccccccccccccccccccccccccccccccccc","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.310Z] [DEBUG] Signature verified successfully {"sha":"a1b2c3d4e5f6789012345678901234567890abcd","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.331Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":1,"totalCommits":20}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.332Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.333Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.333Z] [DEBUG] Signature mismatch {"sha":"a1b2c3d4e5f6789012345678901234567890abcd","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.332Z] [INFO] ❌ VERIFICATION COMPLETE {"status":"HARD_FAIL","passed":"2/3","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.333Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.333Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.333Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.334Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000000","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.335Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000001","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.335Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000002","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.335Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000003","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.335Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":0}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.335Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000004","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.336Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000005","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.336Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000006","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.336Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000007","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:37.335Z] [WARN] PR has no commits {"prNumber":42}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyPullRequest (src/services/verifier.ts:74:12)
+      at Object.<anonymous> (tests/integration/pipeline.test.ts:192:45)
+
+  console.log
+    [2026-05-10T13:39:37.336Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000008","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.337Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000009","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.337Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.337Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000a","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.338Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.337Z] [DEBUG] No signature on commit {"sha":"a1b2c3d4e5f6789012345678901234567890abcd"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.338Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000b","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.339Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.339Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.340Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000c","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.340Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.340Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000d","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.340Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.340Z] [INFO] ❌ VERIFICATION COMPLETE {"status":"SOFT_FAIL","passed":"0/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.340Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000e","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.341Z] [DEBUG] DID Document resolved {"did":"did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.340Z] [DEBUG] No signature on commit {"sha":"a1b2c3d4e5f6789012345678901234567890abcd"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.341Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.341Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000f","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.341Z] [DEBUG] Resolved contributor-provided DID {"username":"alice","did":"did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.342Z] [DEBUG] DID Document resolved {"did":"did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.342Z] [DEBUG] Credential issued {"subject":"did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.342Z] [DEBUG] Credential validated {"subject":"did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.342Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000010","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.342Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.343Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.342Z] [DEBUG] No public key in verification method {"keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.343Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"1/1","did":"did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.343Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000011","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.343Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.343Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.343Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000012","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.344Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000013","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.344Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":2}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.344Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.344Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.344Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"20/20","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.344Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.345Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.344Z] [DEBUG] Signature verified successfully {"sha":"replay1111111111111111111111111111111111aa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.345Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.345Z] [DEBUG] Signature verified successfully {"sha":"replay1111111111111111111111111111111111aa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.346Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.346Z] [DEBUG] Signature verified successfully {"sha":"replay2222222222222222222222222222222222bb","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.345Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.346Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.346Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":100,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.347Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.347Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.347Z] [INFO] ❌ VERIFICATION COMPLETE {"status":"SOFT_FAIL","passed":"1/2","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.347Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.348Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.warn
+    [2026-05-10T13:39:37.346Z] [WARN] Replay attack detected: signature reuse {"currentCommit":"replay3333333333333333333333333333333333cc","previousCommit":"replay2222222222222222222222222222222222bb"}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyCommitSignature (src/services/cryptoService.ts:158:12)
+      at Object.<anonymous> (tests/unit/cryptoService.test.ts:155:39)
+
+  console.log
+    [2026-05-10T13:39:37.348Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.348Z] [DEBUG] Signature verified successfully {"sha":"replay4444444444444444444444444444444444dd","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.349Z] [DEBUG] Signature verified successfully {"sha":"replay5555555555555555555555555555555555ee","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.348Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":251}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+PASS tests/unit/cryptoService.test.ts
+  Crypto Service
+    computeExpectedSignature()
+      ✓ should be deterministic for same inputs (2 ms)
+      ✓ should differ for different commit SHAs
+      ✓ should differ for different public keys
+    verifyCommitSignature()
+      ✓ should PASS for valid signature (correct DID) (23 ms)
+      ✓ should FAIL for invalid signature (wrong DID) (4 ms)
+      ✓ should FAIL for unsigned commit (2 ms)
+      ✓ should FAIL for commit with no signature payload (2 ms)
+      ✓ should FAIL when verification method has no public key (1 ms)
+    Replay Protection
+      ✓ should accept same signature for same commit (idempotent) (3 ms)
+      ✓ should REJECT signature reused across different commits (2 ms)
+      ✓ should track registry size correctly
+      ✓ should reset on clear
+    generateVerificationNonce()
+      ✓ should generate 32-character hex nonce
+      ✓ should generate different nonces for different PRs
+      ✓ should generate different nonces for same PR (entropy)
+
+  console.warn
+    [2026-05-10T13:39:37.349Z] [WARN] PR exceeds max commit count {"count":251,"max":250}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyPullRequest (src/services/verifier.ts:93:12)
+      at Object.<anonymous> (tests/integration/pipeline.test.ts:257:45)
+
+  console.log
+    [2026-05-10T13:39:37.348Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000064","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.351Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.352Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"1/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.352Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.352Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.352Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.352Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":101,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.353Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.352Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":42,"totalCommits":2}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.353Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.353Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.353Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.353Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.354Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.353Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.354Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000065","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.354Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"1/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.354Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.354Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.354Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.355Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":102,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.355Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.354Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.355Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.355Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.356Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.355Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.356Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.356Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.356Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000066","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.357Z] [DEBUG] Signature verified successfully {"sha":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.357Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"1/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.357Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.358Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.357Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"2/2","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.358Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":103,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.358Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.359Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.359Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.359Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.359Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.359Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000067","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.360Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"1/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.360Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.360Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.360Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":104,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.361Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.361Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+PASS tests/integration/pipeline.test.ts
+  Verification Pipeline (Integration)
+    SUCCESS path
+      ✓ should SUCCEED for single signed commit with matching DID (85 ms)
+      ✓ should SUCCEED for multiple signed commits (11 ms)
+      ✓ should include per-commit results (7 ms)
+      ✓ should include verification nonce (6 ms)
+    HARD_FAIL path
+      ✓ should HARD_FAIL when signature does not match DID (2 ms)
+      ✓ should HARD_FAIL for invalid contributor DID (2 ms)
+      ✓ should HARD_FAIL the entire PR if ANY commit fails (19 ms)
+    SOFT_FAIL path
+      ✓ should SOFT_FAIL for empty PR (no commits) (2 ms)
+      ✓ should SOFT_FAIL for unsigned commits (when signatures not required) (4 ms)
+    Edge Cases
+      ✓ should handle contributor-provided DID (2 ms)
+      ✓ should handle mixed signed/unsigned commits (5 ms)
+      ✓ should handle PR exceeding max commit count (3 ms)
+      ✓ should handle multiple authors across commits (7 ms)
+
+  console.log
+    [2026-05-10T13:39:37.361Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.362Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.362Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.363Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000068","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.363Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"1/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.364Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.365Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.365Z] [DEBUG] Generated fallback mock DID {"username":"bob","did":"did:web:example.com:users:bob"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.365Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:bob","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.365Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":200,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.368Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.368Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.368Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.368Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.368Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.369Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.369Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"1/1","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.369Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"bob","prNumber":201,"totalCommits":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.369Z] [DEBUG] Generated fallback mock DID {"username":"bob","did":"did:web:example.com:users:bob"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.370Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:bob","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.370Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:bob","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.370Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:bob"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.370Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.370Z] [DEBUG] Signature verified successfully {"sha":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","keyId":"did:web:example.com:users:bob#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.371Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"1/1","did":"did:web:example.com:users:bob"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.371Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.372Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.372Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.372Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.373Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.373Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.374Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.374Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.374Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.375Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.375Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.375Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.376Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.376Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.376Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.376Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.376Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.377Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.377Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.377Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.377Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.377Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.378Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.378Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.378Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.378Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.378Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.379Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.379Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.379Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.379Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.380Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.380Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.380Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.381Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.381Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.381Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.381Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.382Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.382Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.382Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.382Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.382Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.383Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+PASS tests/unit/ed25519.test.ts
+  Real Ed25519 Cryptography
+    Key Generation
+      ✓ should generate a valid keypair with correct lengths (23 ms)
+      ✓ should generate unique keypairs on each call
+      ✓ should generate deterministic keypair from seed (1 ms)
+      ✓ should reject seed with wrong length (12 ms)
+    Sign and Verify
+      ✓ should produce valid signature that verifies (2 ms)
+      ✓ should verify signature on commit SHA (2 ms)
+      ✓ should produce different signatures for different messages (1 ms)
+    Tampered Message Detection
+      ✓ should REJECT signature when message is tampered (3 ms)
+      ✓ should REJECT when even one byte of message changes (5 ms)
+    Wrong Key Detection
+      ✓ should REJECT signature verified with wrong public key (3 ms)
+    Malformed Input Handling
+      ✓ should return false for wrong-length signature
+      ✓ should return false for wrong-length public key
+      ✓ should return false for empty inputs
+    Commit Signature Verification (Real)
+      ✓ should verify a real Ed25519 commit signature (2 ms)
+      ✓ should REJECT commit signature with wrong key (2 ms)
+      ✓ should REJECT empty commit SHA
+      ✓ should REJECT empty signature
+      ✓ should REJECT empty public key
+      ✓ should REJECT malformed hex in signature
+      ✓ should REJECT malformed hex in public key
+      ✓ should REJECT wrong-length signature (not 64 bytes) (1 ms)
+      ✓ should REJECT wrong-length public key (not 32 bytes)
+    Hex Utilities
+      ✓ should roundtrip bytes through hex encoding
+      ✓ should reject odd-length hex strings
+      ✓ should reject invalid hex characters (1 ms)
+
+  console.log
+    [2026-05-10T13:39:37.383Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.384Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.385Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.385Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.385Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.385Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.386Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.386Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.386Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.386Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.386Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.387Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.387Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.387Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.387Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.388Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.388Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.388Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.388Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.388Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.389Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.389Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.389Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.389Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.389Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.390Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.390Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.390Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.390Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.390Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.391Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.391Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.391Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.391Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.392Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.392Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.392Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.392Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.393Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.393Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.393Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.393Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.393Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.394Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.394Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.394Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.394Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.395Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.395Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.395Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.395Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.395Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.396Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.396Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.396Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.396Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+          at Function.from (<anonymous>)
+
+  console.log
+    [2026-05-10T13:39:37.396Z] [INFO] ⚙️  VERIFICATION PIPELINE STARTED {"contributor":"alice","prNumber":300,"totalCommits":50}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.397Z] [DEBUG] Generated fallback mock DID {"username":"alice","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.397Z] [DEBUG] DID Document resolved {"did":"did:web:example.com:users:alice","keys":1}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.397Z] [DEBUG] Credential issued {"subject":"did:web:example.com:users:alice","issuer":"did:web:issuer.example"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.397Z] [DEBUG] Credential validated {"subject":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.398Z] [DEBUG] Issuer trust check {"issuer":"did:web:issuer.example","trusted":true}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.398Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000000","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.398Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000001","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.398Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000002","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.398Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000003","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.399Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000004","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.399Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000005","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.399Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000006","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.399Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000007","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.400Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000008","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.400Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000009","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.401Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000a","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.401Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000b","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.401Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000c","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.402Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000d","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.402Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000e","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.402Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000000f","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.402Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000010","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.403Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000011","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.403Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000012","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.403Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000013","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.403Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000014","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.403Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000015","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.404Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000016","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.404Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000017","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.404Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000018","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.404Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000019","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.404Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000001a","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.405Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000001b","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.405Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000001c","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.405Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000001d","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.405Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000001e","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.405Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000001f","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.406Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000020","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.406Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000021","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.406Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000022","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.406Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000023","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.407Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000024","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.407Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000025","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.407Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000026","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.407Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000027","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.407Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000028","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.408Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000029","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.408Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000002a","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.408Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000002b","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.408Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000002c","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.408Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000002d","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.409Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000002e","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.409Z] [DEBUG] Signature verified successfully {"sha":"000000000000000000000000000000000000002f","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.409Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000030","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.409Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000031","keyId":"did:web:example.com:users:alice#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:37.410Z] [INFO] ✅ VERIFICATION COMPLETE {"status":"SUCCESS","passed":"50/50","did":"did:web:example.com:users:alice"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+PASS tests/concurrency/parallel.test.ts
+  Concurrency Tests
+    ✓ should handle 20 rapid commits on a single PR (74 ms)
+    ✓ should handle parallel verification of 5 independent PRs (18 ms)
+    ✓ should isolate verification state between different PRs (7 ms)
+    ✓ should complete verification within 100ms for 50 commits (39 ms)
+
+Test Suites: 9 passed, 9 total
+Tests:       113 passed, 113 total
+Snapshots:   0 total
+Time:        4.006 s
+Ran all test suites.

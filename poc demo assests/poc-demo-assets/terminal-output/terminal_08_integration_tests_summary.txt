@@ -1,0 +1,25 @@
+PASS tests/integration/pipeline.test.ts
+  Verification Pipeline (Integration)
+    SUCCESS path
+      ✓ should SUCCEED for single signed commit with matching DID (21 ms)
+      ✓ should SUCCEED for multiple signed commits (3 ms)
+      ✓ should include per-commit results (3 ms)
+      ✓ should include verification nonce (2 ms)
+    HARD_FAIL path
+      ✓ should HARD_FAIL when signature does not match DID (2 ms)
+      ✓ should HARD_FAIL for invalid contributor DID (2 ms)
+      ✓ should HARD_FAIL the entire PR if ANY commit fails (5 ms)
+    SOFT_FAIL path
+      ✓ should SOFT_FAIL for empty PR (no commits) (1 ms)
+      ✓ should SOFT_FAIL for unsigned commits (when signatures not required) (1 ms)
+    Edge Cases
+      ✓ should handle contributor-provided DID (3 ms)
+      ✓ should handle mixed signed/unsigned commits (2 ms)
+      ✓ should handle PR exceeding max commit count (1 ms)
+      ✓ should handle multiple authors across commits (4 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       13 passed, 13 total
+Snapshots:   0 total
+Time:        0.92 s, estimated 4 s
+Ran all test suites matching /tests\/integration/i.

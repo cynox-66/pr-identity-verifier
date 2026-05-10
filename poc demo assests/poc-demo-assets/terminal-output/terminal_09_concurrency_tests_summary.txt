@@ -1,0 +1,15 @@
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+PASS tests/concurrency/parallel.test.ts
+  Concurrency Tests
+    ✓ should handle 20 rapid commits on a single PR (33 ms)
+    ✓ should handle parallel verification of 5 independent PRs (13 ms)
+    ✓ should isolate verification state between different PRs (4 ms)
+    ✓ should complete verification within 100ms for 50 commits (31 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.942 s, estimated 4 s
+Ran all test suites matching /tests\/concurrency/i.

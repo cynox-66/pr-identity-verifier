@@ -1,0 +1,104 @@
+  console.log
+    [2026-05-10T13:39:51.875Z] [DEBUG] Signature verified successfully {"sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.884Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000000","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.884Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000001","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.885Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000002","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.885Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000003","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.885Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000004","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.886Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000005","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.886Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000006","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.886Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000007","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.886Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000008","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.887Z] [DEBUG] Signature verified successfully {"sha":"0000000000000000000000000000000000000009","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.887Z] [DEBUG] Signature verified successfully {"sha":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.890Z] [DEBUG] Signature verified successfully {"sha":"cccccccccccccccccccccccccccccccccccccccc","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.891Z] [DEBUG] Signature verified successfully {"sha":"cccccccccccccccccccccccccccccccccccccccc","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.log
+    [2026-05-10T13:39:51.892Z] [DEBUG] Signature verified successfully {"sha":"dddddddddddddddddddddddddddddddddddddddd","keyId":"did:web:test#key-1"}
+
+      at Logger.log (src/utils/logger.ts:42:15)
+
+  console.warn
+    [2026-05-10T13:39:51.892Z] [WARN] Replay attack detected: signature reuse {"currentCommit":"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","previousCommit":"dddddddddddddddddddddddddddddddddddddddd"}
+
+      38 |       console.error(formattedLog);
+      39 |     } else if (level === 'warn') {
+    > 40 |       console.warn(formattedLog);
+         |               ^
+      41 |     } else {
+      42 |       console.log(formattedLog);
+      43 |     }
+
+      at Logger.log (src/utils/logger.ts:40:15)
+      at Logger.warn (src/utils/logger.ts:55:10)
+      at verifyCommitSignature (src/services/cryptoService.ts:158:12)
+      at Object.<anonymous> (tests/unit/replayRegistry.test.ts:120:37)
+
+PASS tests/unit/replayRegistry.test.ts
+  Replay Registry (TTL + Bounds)
+    ✓ should record verified signatures in the registry (11 ms)
+    ✓ should grow registry with unique signatures (3 ms)
+    ✓ should clear the registry completely (3 ms)
+    ✓ should allow idempotent re-verification of same commit (1 ms)
+    ✓ should detect replay attacks (cross-commit reuse) (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.972 s, estimated 4 s
+Ran all test suites matching /tests\/unit\/replayRegistry.test.ts/i.

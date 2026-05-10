@@ -1,0 +1,40 @@
+PASS tests/unit/ed25519.test.ts
+  Real Ed25519 Cryptography
+    Key Generation
+      ✓ should generate a valid keypair with correct lengths (15 ms)
+      ✓ should generate unique keypairs on each call
+      ✓ should generate deterministic keypair from seed (1 ms)
+      ✓ should reject seed with wrong length (5 ms)
+    Sign and Verify
+      ✓ should produce valid signature that verifies (2 ms)
+      ✓ should verify signature on commit SHA (2 ms)
+      ✓ should produce different signatures for different messages (1 ms)
+    Tampered Message Detection
+      ✓ should REJECT signature when message is tampered (4 ms)
+      ✓ should REJECT when even one byte of message changes (3 ms)
+    Wrong Key Detection
+      ✓ should REJECT signature verified with wrong public key (3 ms)
+    Malformed Input Handling
+      ✓ should return false for wrong-length signature
+      ✓ should return false for wrong-length public key
+      ✓ should return false for empty inputs
+    Commit Signature Verification (Real)
+      ✓ should verify a real Ed25519 commit signature (2 ms)
+      ✓ should REJECT commit signature with wrong key (2 ms)
+      ✓ should REJECT empty commit SHA
+      ✓ should REJECT empty signature
+      ✓ should REJECT empty public key (1 ms)
+      ✓ should REJECT malformed hex in signature
+      ✓ should REJECT malformed hex in public key
+      ✓ should REJECT wrong-length signature (not 64 bytes)
+      ✓ should REJECT wrong-length public key (not 32 bytes)
+    Hex Utilities
+      ✓ should roundtrip bytes through hex encoding (1 ms)
+      ✓ should reject odd-length hex strings
+      ✓ should reject invalid hex characters
+
+Test Suites: 1 passed, 1 total
+Tests:       25 passed, 25 total
+Snapshots:   0 total
+Time:        0.926 s, estimated 4 s
+Ran all test suites matching /tests\/unit\/ed25519.test.ts/i.

@@ -1,0 +1,5 @@
+> github-identity-verifier@1.0.0 dev
+> ts-node src/index.ts
+
+[2026-05-10T13:40:29.103Z] [INFO] Starting GitHub Identity Verifier {"port":3000,"nodeEnv":"development","checkRuns":false,"prComments":true,"requireSignatures":false,"didDomain":"example.com"}
+[2026-05-10T13:40:29.106Z] [INFO] Server listening {"url":"http://localhost:3000","webhookUrl":"http://localhost:3000/webhooks/github","healthUrl":"http://localhost:3000/health"}

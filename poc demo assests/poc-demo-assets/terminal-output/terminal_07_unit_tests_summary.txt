@@ -1,0 +1,20 @@
+      ✓ should PASS for valid signature (correct DID) (17 ms)
+      ✓ should FAIL for invalid signature (wrong DID) (1 ms)
+      ✓ should FAIL for unsigned commit
+      ✓ should FAIL for commit with no signature payload (1 ms)
+      ✓ should FAIL when verification method has no public key (1 ms)
+    Replay Protection
+      ✓ should accept same signature for same commit (idempotent)
+      ✓ should REJECT signature reused across different commits (2 ms)
+      ✓ should track registry size correctly (1 ms)
+      ✓ should reset on clear
+    generateVerificationNonce()
+      ✓ should generate 32-character hex nonce
+      ✓ should generate different nonces for different PRs
+      ✓ should generate different nonces for same PR (entropy)
+
+Test Suites: 6 passed, 6 total
+Tests:       86 passed, 86 total
+Snapshots:   0 total
+Time:        2.353 s, estimated 4 s
+Ran all test suites matching /tests\/unit/i.
